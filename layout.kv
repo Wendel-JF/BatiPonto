@@ -1,0 +1,62 @@
+#:include components/theme-toggle.kv
+#:include components/inputs.kv
+#:include components/navigation_bar.kv
+
+#:import colors kivymd.color_definitions.colors
+
+MDScreen:
+    md_bg_color: app.theme_cls.bg_normal
+
+    BoxLayout:
+        orientation: "vertical"
+        spacing: 24
+    
+        # Título no topo 
+        
+       
+        # Conteúdo principal centralizado
+        AnchorLayout:
+            anchor_x: "center"
+            anchor_y: "center"
+
+            MDBoxLayout:
+                orientation: "vertical"
+                size_hint_x: None
+                width: 500
+                size_hint_y: None
+                height: login_input.minimum_height + 40
+                padding: 20
+                spacing: 24
+
+                ToggleThemeButton:
+
+                MDLabel:
+                    text: "BatiPonto"
+                    halign: "center"
+                    font_style: "H4"
+                    size_hint_y: None
+                    padding: 24
+                    height: self.texture_size[1]
+
+                MDLabel:
+                    text: "Login"
+                    halign: "center"
+                    font_style: "H6"
+                    size_hint_y: None
+                    height: self.texture_size[1]
+
+                MDLabel:
+                    text: "Insira seu e-mail corporativo e senha para logar nesse aplicativo"
+                    halign: "center"
+                    font_size: "13sp"
+                    theme_text_color: "Custom"
+                    text_color: colors["Gray"]["500"]
+                    size_hint_y: None
+                    height: self.texture_size[1]
+
+                # Componente de input
+                LoginInput:
+                    id: login_input
+
+        # Menu inferior
+        NavBar:

@@ -1,0 +1,14 @@
+<ToggleThemeButton@BoxLayout>:
+    orientation: "vertical"
+    spacing: 20
+    padding: 20
+    
+    MDIconButton:
+        icon: "weather-night" if app.theme_cls.theme_style == "Light" else "white-balance-sunny"
+        user_font_size: "48sp"
+        theme_text_color: "Custom"
+        text_color: app.theme_cls.primary_color
+        pos_hint: {"center_x": 0.5}
+        on_release: app.switch_theme_style()
+
+            
