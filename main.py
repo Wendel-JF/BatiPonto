@@ -20,10 +20,9 @@ class MeuApp(MDApp):
 
         return screen
 
-    # Funcao para troca de tela
-    def on_switch_tabs(self, bar, item, item_icon, item_text):
-        # Troca a tela do MDScreenManager pelo nome
-        self.root.ids.screen_manager.current = item_text
+    def on_switch_tabs(self, item_text):
+    # Troca a tela do MDScreenManager pelo nome
+        self.sm.current = item_text
 
     # Funcao para troca de tema
     def switch_theme_style(self):
