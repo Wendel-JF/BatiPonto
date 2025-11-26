@@ -1,63 +1,46 @@
-#:include components/theme-toggle.kv
-#:include components/inputs.kv
-#:include components/navigation_bar.kv
+BoxLayout:
+    orientation: "vertical"
+    size_hint: 1, 1
 
-#:import colors kivymd.color_definitions.colors
-
-MDScreen:
-    md_bg_color: app.theme_cls.bg_normal
-
+    # Conteúdo principal (ocupa todo o espaço disponível)
     BoxLayout:
+        id: screen_container
         orientation: "vertical"
-        spacing: 24
-    
-        # Título no topo 
+        size_hint_y: 1
+
+    # Contêiner fixo para a barra de navegação
+    BoxLayout:
+        id: nav_container
+        size_hint_y: None
+        opacity: 0          # <--- COMEÇA OCULTO
+        disabled: True      # <--- NÃO CLICÁVEL
         
-       
-        # Conteúdo principal centralizado
-        AnchorLayout:
-            anchor_x: "center"
-            anchor_y: "center"
+        MDBottomNavigation:
+            id: bottom_nav
+            theme_text_color: "Custom"
+            text_color_active: app.theme_cls.accent_color
 
-            MDBoxLayout:
-                orientation: "vertical"
-                size_hint_x: None
-                width: 500
-                size_hint_y: None
-                height: login_input.minimum_height + 40
-                padding: 20
-                spacing: 24
+            MDBottomNavigationItem:
+                name: "home"
+                text: "Início"
+                icon: "home"
+                text_color: app.text_color
+                on_tab_press: app.on_switch_tabs("home")
 
-                ToggleThemeButton:
+            MDBottomNavigationItem:
+                name: "historic"
+                text: "Histórico"
+                icon: "clock-time-two-outline"
+                on_tab_press: app.on_switch_tabs("historic")
 
-                MDLabel:
-                    text: "BatiPonto"
-                    halign: "center"
-                    font_style: "H4"
-                    size_hint_y: None
-                    padding: 24
-                    height: self.texture_size[1]
+            MDBottomNavigationItem:
+                name: "settings"
+                text: "Configurações"
+                icon: "cog"
+                on_tab_press: app.on_switch_tabs("settings")
 
-                MDLabel:
-                    text: "Login"
-                    halign: "center"
-                    font_style: "H6"
-                    size_hint_y: None
-                    height: self.texture_size[1]
-
-                MDLabel:
-                    text: "Insira seu e-mail corporativo e senha para logar nesse aplicativo"
-                    halign: "center"
-                    font_name: "fonts/Montserrat/Montserrat-VariableFont_wght.ttf"
-                    font_size: "10sp"
-                    theme_text_color: "Custom"
-                    text_color: colors["Gray"]["200"]
-                    size_hint_y: None
-                    height: self.texture_size[1]
-
-                # Componente de input
-                LoginInput:
-                    id: login_input
-
-        # Menu inferior
-        NavBar:
+            MDBottomNavigationItem:
+                name: "profile"
+                text: "Perfil"
+                icon: "account"
+                on_tab_press: app.on_switch_tabs("profile")

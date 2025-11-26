@@ -1,0 +1,81 @@
+#:include components/card.kv
+#:include components/theme-toggle.kv
+
+<SettingsScreen>:
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDBoxLayout:
+            id: registro_container
+            orientation: "vertical"
+            radius: [10,]
+            spacing: dp(10)
+            size_hint: 1, 1
+
+            MDLabel:
+                text: "Configuraçôes"
+                halign: "center"
+                font_style: "H6"
+                size_hint_y: None
+                height: dp(60)
+                padding: dp(10), dp(10)
+                theme_text_color: "Custom"
+                text_color: 1,1,1,1
+                md_bg_color: app.theme_cls.primary_color
+
+            AnchorLayout:
+                size_hint: 1, 1
+                anchor_x: "center"
+                anchor_y: "center"
+
+                MDBoxLayout:
+                    orientation: "vertical"
+                    spacing: dp(30)
+                    size_hint_y: None
+                    size_hint_x: 1
+                    padding: dp(20)
+                    height: self.minimum_height
+
+                    ToggleThemeButton:
+                        pos_hint: {"center_x": 0.5}
+                        elevation: 2    
+
+                    Card:
+                        text: "Editar Conta"
+                        icon: "square-edit-outline"
+                        size_hint: 1, None
+                        bgcolor: app.theme_cls.accent_color
+
+                    Card:
+                        text: "Privacidade"
+                        icon: "lock"
+                        size_hint: 1, None
+                        bgcolor: app.theme_cls.accent_color
+
+                    Card:
+                        text: "Notificações"
+                        icon: "bell-outline"
+                        size_hint: 1, None
+                        bgcolor: app.theme_cls.accent_color
+
+                    Card:
+                        text: "Suporte"
+                        icon: "headset"
+                        size_hint: 1, None
+                        bgcolor: app.theme_cls.accent_color
+
+                    Card:
+                        text: "Idioma"
+                        icon: "translate"
+                        size_hint: 1, None
+                        bgcolor: app.theme_cls.accent_color
+
+                    Card:
+                        text: "Sair"
+                        size_hint: None, None
+                        width: dp(120)
+                        bgcolor: app.theme_cls.accent_color
+                        pos_hint: {"center_x": 0.5}
+                        on_release: app.logout()
+
+

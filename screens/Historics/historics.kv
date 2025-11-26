@@ -1,0 +1,46 @@
+#:include components/tab.kv
+<HistoricScreen>:
+    MDBoxLayout:
+        orientation: "vertical"
+        size_hint: 1, 1
+
+        MDLabel:
+            text: "Histórico"
+            halign: "center"
+            font_style: "H6"
+            size_hint_y: None
+            height: dp(60)
+            padding: dp(10), dp(10)
+            theme_text_color: "Custom"
+            text_color: 1,1,1,1
+            md_bg_color: app.theme_cls.primary_color
+             
+        MDTabs:
+            id: tabs
+            tab_bar_height: dp(48)
+            background_color: app.theme_cls.bg_dark
+
+            TabComponent:
+                title: "Ontem"
+                text_color: app.text_color
+
+                MDBoxLayout:
+                    orientation: "vertical"
+                    spacing: "10dp"
+
+            TabComponent:
+                title: "Semanal"
+                
+
+            TabComponent:
+                title: "Mensal"
+               
+
+            TabComponent:
+                title: "Anual"
+
+
+    
+ 
+
+   

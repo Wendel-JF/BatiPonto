@@ -1,0 +1,133 @@
+#:include components/theme-toggle.kv
+#:import colors kivymd.color_definitions.colors
+
+<LoginScreen>:
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "center"
+        size_hint: 1, 1
+
+        MDBoxLayout:
+            orientation: "vertical"
+            md_bg_color: app.theme_cls.bg_dark
+            elevation: 4
+            radius: [10,]
+            padding: "5dp"
+            spacing: "10dp"
+            size_hint: None, None
+            width: min(root.width * 0.9, 400)
+            height: self.minimum_height  # altura ajusta ao conteúdo
+            id: main_box
+         
+            BoxLayout:
+                size_hint: 1, None
+                height: "45dp"
+               
+                # Espaço à esquerda
+                Widget:
+                    size_hint_x: 1
+
+                # Botão centralizado
+                ToggleThemeButton:
+
+                # Espaço flexível entre os botões
+                Widget:
+                    size_hint_x: 1
+
+
+            MDBoxLayout:
+                orientation: "vertical"
+                spacing: dp(130)
+                size_hint_y: None
+                size_hint_x: 1
+                height: self.minimum_height
+                pos_hint: {"center_x": 0.5, "center_y": 0.6}
+
+                MDLabel:
+                    text: "BatiPonto"
+                    halign: "center"
+                    font_size: "28sp"
+                    theme_text_color: "Custom"
+                    text_color: app.text_color
+                    size_hint_y: None
+                    height: self.texture_size[1]
+                    font_name: "Roboto"
+
+                MDBoxLayout:
+                    size_hint_x: 1
+                    orientation: "vertical"
+                    spacing: dp(5)
+
+                    MDLabel:
+                        text: "Login"
+                        halign: "center"
+                        font_name: "Roboto"
+                        font_size: "18sp"
+                        bold: True
+                        size_hint_y: None
+                        height: self.texture_size[1]
+
+                    MDLabel:
+                        text: "Insira seu email e senha para logar neste aplicativo."
+                        halign: "center"
+                        font_name: "RobotoLight"
+                        font_size: "14sp"
+                        theme_text_color: "Secondary"
+                        size_hint_y: None
+                        height: self.texture_size[1]
+            
+            MDBoxLayout:
+                name: "login"
+                orientation: "vertical"
+                padding: 40
+                spacing: 20
+                size_hint_y: None
+                height: self.minimum_height
+
+                MDTextField:
+                    id: email
+                    hint_text: "email@dominio.com"
+                    icon_right: "account"
+
+                MDTextField:
+                    id: password
+                    hint_text: "Senha"
+                    password: True
+                    icon_right: "lock"
+
+                MDRaisedButton:
+                    text: "Entrar"
+                    size_hint_y: None
+                    size_hint_x: 1
+                    pos_hint: {"center_x": 0.5}
+                    height: "48dp"
+                    on_release: root.do_login()
+
+                
+                MDLabel:
+                    markup: True
+                    text: "Ao clicar em continuar, você concorda com nossos [b]Termos de Serviço[/b] e [b]Política de Privacidade[/b]."
+                    #halign: "center"
+                    font_name: "Roboto"
+                    font_size: "12sp"
+                    theme_text_color: "Secondary"
+                    size_hint_y: None
+                    height: self.texture_size[1]
+
+                MDLabel:
+                    markup: True
+                    text: "Caso for Funcionario, [ref=register][b]Se registre aqui![/b][/ref]"
+                    halign: "center"
+                    font_name: "Roboto"
+                    font_size: "12sp"
+                    theme_text_color: "Secondary"
+                    size_hint_y: None
+                    height: self.texture_size[1]
+                    on_ref_press:
+                        root.go_register()
+                
+        
+                
+          
+
+            

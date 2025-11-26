@@ -1,0 +1,56 @@
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+#:import ColorProperty kivy.properties.ColorProperty
+#:import StringProperty kivy.properties.StringProperty
+
+<Card@MDCard>:
+    size_hint: root.size_hint
+    height: dp(60)
+    width: root.width
+    elevation: 1
+  
+ # 🔹 Valor que o usuário passa
+    bgcolor: "#405976"        # StringProperty
+
+    # 🔹 Cor já convertida (RGBA)
+    color_normal: root.bgcolor
+
+    # 🔹 Cor inicial exibida
+    md_bg_color: root.color_normal
+
+    # --- EFEITO DE PRESSIONADO ---
+    # Cor ao pressionar
+    on_touch_down:
+        if self.collide_point(*args[1].pos): self.md_bg_color = get_color_from_hex("#5C7DA1")
+
+    # Volta à cor original
+    on_touch_up:
+        self.md_bg_color = root.color_normal
+
+    text: ""
+    icon: ""
+    on_release: "" # <<< FUNÇÃO QUANDO CLICA
+    MDBoxLayout:
+        orientation: "horizontal"
+        spacing: dp(5)
+        padding: dp(20)
+
+        MDIcon:
+            icon: root.icon
+            theme_text_color: "Custom"
+            text_color: 1, 1, 1, 1
+            size_hint_x: None
+            width: dp(50)
+            pos_hint: {"center_y": .5}     
+            text_size: self.size
+            halign: "center"
+            valign: "center"
+
+        MDLabel:
+            text: root.text
+            halign: "center"
+            valign: "center"
+            text_size: self.size
+            #bold: True
+            font_size: "20sp"
+            theme_text_color: "Custom"
+            text_color: 1, 1, 1, 1

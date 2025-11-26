@@ -1,0 +1,15 @@
+<TabComponent>:
+  orientation: "vertical"
+
+    # conteúdo interno vai aqui ↓
+  ScrollView:
+    bar_width: 4
+    scroll_type: ['bars', 'content']
+
+    BoxLayout:
+      id: content_container
+      orientation: "vertical"
+      spacing: dp(10)
+      padding: dp(20)
+      size_hint_y: None
+      height: self.minimum_height

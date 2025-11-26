@@ -1,0 +1,111 @@
+<RegisterScreen>:
+    AnchorLayout:
+        anchor_x: "center"
+        anchor_y: "center"
+        size_hint: 1, 1
+
+        MDBoxLayout:
+            orientation: "vertical"
+            md_bg_color: app.theme_cls.bg_dark
+            elevation: 4
+            radius: [10,]
+            padding: "5dp"
+            spacing: "10dp"
+            size_hint: None, None
+            width: min(root.width * 0.9, 400)
+            height: self.minimum_height
+            id: main_box
+
+            BoxLayout:
+                size_hint: 1, None
+                height: "45dp"
+
+                Widget:
+                    size_hint_x: 1
+                ToggleThemeButton:
+                Widget:
+                    size_hint_x: 1
+
+            MDBoxLayout:
+                orientation: "vertical"
+                spacing: dp(130)
+                size_hint_y: None
+                size_hint_x: 1
+                height: self.minimum_height
+                pos_hint: {"center_x": 0.5, "center_y": 0.6}
+
+                MDLabel:
+                    text: "BatiPonto"
+                    halign: "center"
+                    font_size: "28sp"
+                    theme_text_color: "Custom"
+                    text_color: app.text_color
+                    size_hint_y: None
+                    height: self.texture_size[1]
+                    font_name: "Roboto"
+
+                MDBoxLayout:
+                    orientation: "vertical"
+                    spacing: dp(5)
+                    size_hint_x: 1
+
+                    MDLabel:
+                        text: "Registro"
+                        halign: "center"
+                        font_name: "Roboto"
+                        font_size: "18sp"
+                        bold: True
+                        size_hint_y: None
+                        height: self.texture_size[1]
+
+                    MDLabel:
+                        text: "Preencha os campos abaixo para criar sua conta."
+                        halign: "center"
+                        font_name: "RobotoLight"
+                        font_size: "14sp"
+                        theme_text_color: "Secondary"
+                        size_hint_y: None
+                        height: self.texture_size[1]
+
+            MDBoxLayout:
+                orientation: "vertical"
+                padding: 40
+                spacing: 20
+                size_hint_y: None
+                height: self.minimum_height
+
+                MDTextField:
+                    id: name
+                    hint_text: "Nome completo"
+                    icon_right: "account"
+
+                MDTextField:
+                    id: email
+                    hint_text: "email@dominio.com"
+                    icon_right: "email"
+
+                MDTextField:
+                    id: password
+                    hint_text: "Senha"
+                    password: True
+                    icon_right: "lock"
+
+                MDRaisedButton:
+                    text: "Cadastrar"
+                    size_hint_y: None
+                    size_hint_x: 1
+                    pos_hint: {"center_x": 0.5}
+                    height: "48dp"
+                    on_release: root.do_register()
+
+                MDLabel:
+                    markup: True
+                    text: "Já possui uma conta? [ref=login][b]Login[/b][/ref]"
+                    halign: "center"
+                    font_name: "Roboto"
+                    font_size: "12sp"
+                    theme_text_color: "Secondary"
+                    size_hint_y: None
+                    height: self.texture_size[1]
+                    on_ref_press:
+                        root.go_login()

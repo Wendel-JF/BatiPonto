@@ -1,0 +1,244 @@
+#:include components/round-button.kv
+#:include components/home/ponto-card.kv
+#:import ColorProperty kivy.properties.ColorProperty
+#:include components/card.kv
+<HomeScreen>:
+
+    MDBoxLayout:
+        orientation: "vertical"
+        size_hint: 1, 1 
+        MDBoxLayout:
+            size_hint_y: None
+            size_hint_x: 1
+            height: dp(50)
+            md_bg_color: app.theme_cls.primary_color
+            spacing: dp(10)
+            padding: dp(10), 0
+            MDIcon:
+                icon: "clock-outline"
+                theme_text_color: "Custom"
+                text_color: 1, 1, 1, 1
+                size_hint_x: None
+                width: dp(40)
+                pos_hint: {"center_y": .5}     
+    
+            MDLabel:
+                text: "BatiPonto"
+                font_name: app.font_name
+                font_size: "16sp"
+                theme_text_color: "Custom"
+                text_color: 1,1,1,1
+                valign: "middle"
+                halign: "left"
+
+        MDLabel:
+            id: lbl_date
+            text: ""
+            halign: "center"
+            valign: "center"
+            text_size: self.size
+            font_size: "16sp"  # normal
+            size_hint_y: None
+            padding: "10sp"
+            height: "80sp"  # ajusta automaticamente
+
+        MDBoxLayout:
+            size_hint_x: 1
+            size_hint_y: None
+            adaptive_height: True    # ajusta automaticamente
+
+            spacing: dp(8)
+            adaptive_width: True
+            pos_hint: {"center_x": 0.5}
+            
+            MDCard:
+                elevation: 1
+                width: "80dp"
+                height: "50dp"
+                radius: [0]
+                md_bg_color: app.theme_cls.bg_dark
+                size_hint: None, None
+                
+                MDLabel:
+                    id: lbl_p1
+                    text: "8:00"
+                    halign: "center"
+                    valign: "center"
+                    font_size: "20sp"
+                    theme_text_color: "Custom"
+                    text_color: 1, 1, 1, 1
+            MDCard:
+                elevation: 1
+                size_hint: None, None
+                width: "80dp"
+                height: "50dp"
+                radius: [0]
+                md_bg_color: app.theme_cls.bg_dark
+                MDLabel:
+                    id: lbl_p2
+                    text: "12:00"
+                    halign: "center"
+                    valign: "center"
+                    font_size: "20sp"
+                    theme_text_color: "Custom"
+                    text_color: 1, 1, 1, 1
+
+            MDCard:
+                elevation: 1
+                size_hint: None, None
+                width: "80dp"
+                height: "50dp"
+                radius: [0]
+                md_bg_color: app.theme_cls.bg_dark
+                MDLabel:
+                    id: lbl_p3
+                    text: "13:00"
+                    halign: "center"
+                    valign: "center"
+                    font_size: "20sp"
+                    theme_text_color: "Custom"
+                    text_color: 1, 1, 1, 1
+            MDCard:
+                elevation: 1
+                size_hint: None, None
+                width: "80dp"
+                height: "50dp"
+                radius: [0]
+                md_bg_color: app.theme_cls.bg_dark
+                MDLabel:
+                    id: lbl_p4
+                    text: "15:00"
+                    halign: "center"
+                    valign: "center"
+                    font_size: "20sp"
+                    theme_text_color: "Custom"
+                    text_color: 1, 1, 1, 1
+            
+        MDBoxLayout:
+            orientation: "vertical"
+            padding: "20dp"
+            adaptive_height: True
+
+            RoundButton:
+                size_hint: None, None
+                pos_hint: {"center_x": 0.5}  # centraliza horizontal
+                text: "Registrar"
+                on_release: root.registrar_click()
+              
+        # Texto central entre as sessões
+        MDBoxLayout:
+            size_hint_y: None
+            height: "50dp"
+            md_bg_color: app.theme_cls.primary_color
+            padding: "10dp"
+            MDLabel:
+                text: "Históricos de Pontos Recentes"
+                #halign: "center"
+                font_name: app.font_name
+                font_size: "20sp"
+                theme_text_color: "Custom"
+                text_color: 1,1,1,1
+
+        # Sessão inferior com informações de data/hora
+        ScrollView:
+            size_hint_y: 1
+
+            MDBoxLayout:
+                id: registro_container
+                orientation: "vertical"
+                size_hint_y: None               
+                height: self.minimum_height   
+                padding: "20dp"
+                spacing: "15dp"
+
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: dp(75)
+            spacing: dp(10)
+            padding: dp(10)
+            
+            # CARD 1 Total trabalhado
+            MDCard:
+                size_hint: 0.5, 1
+                radius: [12]
+                elevation: 2
+                md_bg_color: app.theme_cls.primary_color
+
+                MDBoxLayout:
+                    orientation: "vertical"
+                    spacing: dp(10)
+                    padding: dp(10)
+
+                    MDLabel:
+                        text: "Total Trabalhado"
+                        halign: "center"
+                        theme_text_color: "Custom"
+                        text_color: 1,1,1,1
+                        font_size: "14sp"
+
+                    MDLabel:
+                        id: lbl_total_horas
+                        text: "0 h"
+                        halign: "center"
+                        font_size: "16sp"
+                        bold: True
+                        theme_text_color: "Custom"
+                        text_color: 1,1,1,1
+
+            # CARD 2 → Percentual
+            MDCard:
+                size_hint: 0.5, 1
+                radius: [12]
+                elevation: 2
+                md_bg_color: app.theme_cls.accent_color
+
+                MDBoxLayout:
+                    orientation: "vertical"
+                    padding: dp(10)
+                    spacing: dp(10)
+
+                    MDLabel:
+                        text: "Progresso (%)"
+                        halign: "center"
+                        theme_text_color: "Custom"
+                        text_color: 1,1,1,1
+                        font_size: "14sp"
+
+                    MDLabel:
+                        id: lbl_porcentagem
+                        text: "0%"
+                        halign: "center"
+                        font_size: "16sp"
+                        bold: True
+                        theme_text_color: "Custom"
+                        text_color: 1,1,1,1
+
+        # Parte inferior com mensagem de sucesso
+        MDBoxLayout:
+            id: msg_sucesso
+            orientation: "vertical"
+            size_hint_y: None
+            height: "0dp"               
+            opacity: 0
+            md_bg_color: app.theme_cls.primary_color
+            padding: "10dp"
+            spacing: "10dp"
+
+            MDLabel:
+                id: msg_sucesso_label
+                text: "Ponto Registrado com Sucesso!"
+                halign: "center"
+                font_name: app.font_name
+                bold: False
+                font_size: "20sp"
+                theme_text_color: "Custom"
+                text_color: 1,1,1,1
+
+            MDProgressBar:
+                id: barra_progresso
+                value: 0
+                size_hint_y: None
+                height: "5dp"
+
+        
