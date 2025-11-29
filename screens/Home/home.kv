@@ -3,7 +3,6 @@
 #:import ColorProperty kivy.properties.ColorProperty
 #:include components/card.kv
 <HomeScreen>:
-
     MDBoxLayout:
         orientation: "vertical"
         size_hint: 1, 1 
@@ -37,15 +36,15 @@
             halign: "center"
             valign: "center"
             text_size: self.size
-            font_size: "16sp"  # normal
+            font_size: "16sp" 
             size_hint_y: None
             padding: "10sp"
-            height: "80sp"  # ajusta automaticamente
+            height: "80sp"  
 
         MDBoxLayout:
             size_hint_x: 1
             size_hint_y: None
-            adaptive_height: True    # ajusta automaticamente
+            adaptive_height: True    
 
             spacing: dp(8)
             adaptive_width: True
@@ -65,8 +64,7 @@
                     halign: "center"
                     valign: "center"
                     font_size: "20sp"
-                    theme_text_color: "Custom"
-                    text_color: 1, 1, 1, 1
+                   
             MDCard:
                 elevation: 1
                 size_hint: None, None
@@ -80,8 +78,6 @@
                     halign: "center"
                     valign: "center"
                     font_size: "20sp"
-                    theme_text_color: "Custom"
-                    text_color: 1, 1, 1, 1
 
             MDCard:
                 elevation: 1
@@ -96,8 +92,6 @@
                     halign: "center"
                     valign: "center"
                     font_size: "20sp"
-                    theme_text_color: "Custom"
-                    text_color: 1, 1, 1, 1
             MDCard:
                 elevation: 1
                 size_hint: None, None
@@ -111,8 +105,6 @@
                     halign: "center"
                     valign: "center"
                     font_size: "20sp"
-                    theme_text_color: "Custom"
-                    text_color: 1, 1, 1, 1
             
         MDBoxLayout:
             orientation: "vertical"
@@ -121,7 +113,7 @@
 
             RoundButton:
                 size_hint: None, None
-                pos_hint: {"center_x": 0.5}  # centraliza horizontal
+                pos_hint: {"center_x": 0.5}  
                 text: "Registrar"
                 on_release: root.registrar_click()
               
@@ -133,7 +125,6 @@
             padding: "10dp"
             MDLabel:
                 text: "Históricos de Pontos Recentes"
-                #halign: "center"
                 font_name: app.font_name
                 font_size: "20sp"
                 theme_text_color: "Custom"
@@ -158,7 +149,6 @@
             spacing: dp(10)
             padding: dp(10)
             
-            # CARD 1 Total trabalhado
             MDCard:
                 size_hint: 0.5, 1
                 radius: [12]
@@ -186,7 +176,6 @@
                         theme_text_color: "Custom"
                         text_color: 1,1,1,1
 
-            # CARD 2 → Percentual
             MDCard:
                 size_hint: 0.5, 1
                 radius: [12]

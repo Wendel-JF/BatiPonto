@@ -4,7 +4,7 @@ from kivymd.uix.card import MDCard
 
 
 class PontoCard(MDCard):
-    bgcolor = ListProperty([1, 1, 1, 1])  # default
+    bgcolor = ListProperty([1, 1, 1, 1]) 
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

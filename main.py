@@ -1,12 +1,12 @@
 from kivy.config import Config
 from kivy.graphics.fbo import Fbo
 
-Config.set('graphics', 'multisamples', '0')  # Desativa anti-aliasing que usa FBO
+Config.set('graphics', 'multisamples', '0')  
 
 Config.set('graphics', 'show_fps', '1')
 Config.set('graphics', 'width', '360')
 Config.set('graphics', 'height', '800')
-Config.set('kivy', 'log_level', 'debug')  # ou 'trace' para ainda mais detalhes
+Config.set('kivy', 'log_level', 'debug')  
 Config.set('kivy', 'log_enable', 1)
 
 import locale
@@ -22,39 +22,35 @@ from kivy.uix.screenmanager import NoTransition
 from kivy.utils import get_color_from_hex
 from kivymd.app import MDApp
 from kivymd.color_definitions import colors
+from kivymd.uix.card import MDCard
 from kivymd.uix.screen import MDScreen
 from kivymd.uix.screenmanager import MDScreenManager
 from kivymd.uix.tab import MDTabsBase
 
 from database.ponto_db import create_pontos_table
 from database.users_db import create_users_table
-#from components.ExpansionPanel.expansion_panel import ExpansionPanelComponent
 from fonts.fonts_config import register_fonts
+from screens.Historics.historics import HistoricScreen
 from screens.Home.home_screen import HomeScreen
 from screens.Login.login_screen import LoginScreen
 from screens.Login.register_screen import RegisterScreen
+from screens.Profile.profile_screen import ProfileScreen
 from screens.Splash.splash_screen import SplashScreen
 
 
-class ContentPanel(BoxLayout):
-    pass
-
-
-class HistoricScreen(MDScreen): pass
-
+class ContentPanel(BoxLayout): pass
 
 class TabComponent(BoxLayout, MDTabsBase):
-    pass
-
-class Tab(BoxLayout, MDTabsBase):
-    title = StringProperty("")   # ← OBRIGATÓRIO!
-    icon = StringProperty("")    # ← OBRIGATÓRIO para evitar o erro
-    
+    title = StringProperty("")
+    def add_widget(self, widget, index=0, canvas=None):
+        if hasattr(self, "ids") and "content_container" in self.ids:
+            return self.ids.content_container.add_widget(widget)
+        return super().add_widget(widget, index=index, canvas=canvas)
 
 class SettingsScreen(MDScreen): pass
-class ProfileScreen(MDScreen): pass
 
-class MeuApp(MDApp):
+
+class BatiPonto(MDApp):
     user = None   # Guarda o usuário logado
     is_logged = False  # Guarda o estado de sessão
     # Define o tipo de fonte do app configurar no arquivo fonts/fonts_config.py
@@ -95,15 +91,13 @@ class MeuApp(MDApp):
             "screens/Login/register.kv",
             "screens/Historics/historics.kv",
             "screens/settings.kv",
-            "screens/profile.kv"
+            "screens/Profile/profile.kv"
         ]:
             Builder.load_file(kv_file)
 
 
         # Criar o gerenciador de telas
         self.sm = MDScreenManager(size_hint=(1, 1), transition=NoTransition())
-
-        #Clock.schedule_once(lambda dt: root.ids.screen_container.add_widget(self.sm))
 
         # Adicionar as telas
         self.sm.add_widget(SplashScreen(name="splash"))
@@ -116,7 +110,7 @@ class MeuApp(MDApp):
 
 
         # Define tela inicial
-        Clock.schedule_once(lambda dt: setattr(self.sm, 'current', 'login'), 0)
+        Clock.schedule_once(lambda dt: setattr(self.sm, 'current', 'splash'), 0)
 
         # Garante que o menu comece invisível
         Clock.schedule_once(lambda dt: self.hide_menu(), 0)
@@ -200,6 +194,7 @@ class MeuApp(MDApp):
 
     def login(self, user_object):
         self.user = user_object
+        self.user_id = user_object["id"] 
         self.is_logged = True
 
     def logout(self):
@@ -214,4 +209,4 @@ class MeuApp(MDApp):
         self.on_switch_tabs('login') 
 
 if __name__ == '__main__':
-    MeuApp().run()
+    BatiPonto().run()

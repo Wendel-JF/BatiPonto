@@ -1,0 +1,83 @@
+<MonthHeader@MDBoxLayout>:
+    orientation: "horizontal"
+    size_hint_y: None
+    height: dp(52)
+    padding: dp(12), dp(8)
+    spacing: dp(8)
+    md_bg_color: 0.31, 0.45, 0.60, 1   
+    radius: [12, 12, 0, 0]            
+    elevation: 2
+    text: ""
+
+    MDLabel:
+        id: month_label
+        text: root.text if root.text else ""
+        valign: "middle"
+        font_style: "Subtitle1"
+        theme_text_color: "Custom"
+        text_color: 1, 1, 1, 1
+
+    MDIconButton:
+        id: toggle_icon
+        icon: "chevron-up"
+        user_font_size: "20sp"
+        theme_text_color: "Custom"
+        text_color: 1,1,1,1
+  
+<HistoricoCard@MDCard>:
+    padding: dp(15)
+    spacing: dp(8)
+    radius: [12]
+    elevation: 0
+    md_bg_color: 0.12, 0.20, 0.32, 1   # azul escuro
+    adaptive_height: True
+
+    data_text: ""
+    entrada: ""
+    saida: ""
+    horas: ""
+    status: ""
+
+    MDBoxLayout:
+        orientation: "vertical"
+        spacing: dp(6)
+        adaptive_height: True
+
+        MDBoxLayout:
+            orientation: "horizontal"
+            spacing: dp(6)
+            adaptive_height: True
+
+            MDIcon:
+                icon: "calendar-month"
+                theme_text_color: "Custom"
+                text_color: 1,1,1,1
+                size_hint: None, None
+                size: dp(20), dp(20)
+
+            MDLabel:
+                text: root.data_text
+                bold: True
+                theme_text_color: "Custom"
+                text_color: 1,1,1,1
+                font_size: "14sp"
+                size_hint_y: None
+                height: self.texture_size[1]
+
+        MDLabel:
+            text: f"• Entrada: {root.entrada}  |  Saída: {root.saida}"
+            theme_text_color: "Secondary"
+            size_hint_y: None
+            height: self.texture_size[1]
+
+        MDLabel:
+            text: f"• {root.horas} Trabalhadas"
+            theme_text_color: "Secondary"
+            size_hint_y: None
+            height: self.texture_size[1]
+
+        MDLabel:
+            text: root.status
+            theme_text_color: "Secondary"
+            size_hint_y: None
+            height: self.texture_size[1]

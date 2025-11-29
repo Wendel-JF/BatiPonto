@@ -38,7 +38,7 @@ class LoginScreen(MDScreen):
 
     def show_menu(self, dt):
         app = MDApp.get_running_app()
-        nav = app.root.ids.nav_container  # <--- conseguimos acessar o menu aqui
+        nav = app.root.ids.nav_container  
         nav.opacity = 1
         nav.disabled = False
         app.theme_cls.theme_style = "Light"

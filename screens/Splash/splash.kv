@@ -1,12 +1,35 @@
 <SplashScreen>:
-    name: "splash"
 
     MDBoxLayout:
         orientation: "vertical"
-        md_bg_color: app.theme_cls.primary_color
+        md_bg_color: app.theme_cls.bg_dark
+        size_hint: 1, 1
 
-        MDLabel:
-            text: "Carregando..."
-            halign: "center"
-            theme_text_color: "Custom"
-            text_color: 1,1,1,1
+        FloatLayout:
+
+            BoxLayout:
+                id: anim_container
+                orientation: "horizontal"
+                size_hint: None, None
+                size: dp(190), dp(40)
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                opacity: 0
+
+                MDIcon:
+                    id: splash_icon
+                    icon: "clock-outline"
+                    theme_text_color: "Custom"
+                    text_color: 1, 1, 1, 1
+                    font_size: "25sp"
+                    halign: "center"
+                    valign: "center"
+
+                MDLabel:
+                    id: splash_text
+                    text: "BatiPonto"
+                    halign: "center"
+                    valign: "center"
+                    theme_text_color: "Custom"
+                    text_color: 1, 1, 1, 1
+                    font_size: "15sp"
+                    bold: True

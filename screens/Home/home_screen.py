@@ -5,10 +5,8 @@ from datetime import datetime, timedelta
 from kivy.animation import Animation
 from kivy.app import App
 from kivy.clock import Clock
-from kivy.factory import Factory
 from kivy.properties import ListProperty, StringProperty
 from kivymd.toast import toast
-from kivymd.uix.label import MDLabel
 from kivymd.uix.screen import MDScreen
 
 from database.ponto_db import listar_pontos, verificar_ponto_no_dia
@@ -22,13 +20,34 @@ class HomeScreen(MDScreen):
     data_atual = StringProperty("")
 
     def on_pre_enter(self):
-        self.ids.registro_container.clear_widgets()
-
         self.carregar_pontos()
-        #Clock.schedule_interval(self.carregar_pontos, 20)
 
         self.atualizar_data_de_hoje()
         Clock.schedule_interval(self.atualizar_data_de_hoje, 30)
+
+        app = App.get_running_app()
+        
+        if hasattr(app, "cache_cards"):
+            self.ids.registro_container.clear_widgets()
+            for c in app.cache_cards:
+                self.ids.registro_container.add_widget(c)
+
+        if hasattr(app, "cache_pontos"):
+            p = app.cache_pontos
+            self.ids.lbl_p1.text = p[0] if len(p) > 0 else ""
+            self.ids.lbl_p2.text = p[1] if len(p) > 1 else ""
+            self.ids.lbl_p3.text = p[2] if len(p) > 2 else ""
+            self.ids.lbl_p4.text = p[3] if len(p) > 3 else ""
+
+        if hasattr(app, "cache_total_horas"):
+            self.ids.lbl_total_horas.text = app.cache_total_horas
+        else:
+            self.ids.lbl_total_horas.text = "0.00 h"
+
+        if hasattr(app, "cache_porcentagem"):
+            self.ids.lbl_porcentagem.text = app.cache_porcentagem
+        else:
+            self.ids.lbl_porcentagem.text = "0%"
 
         self.calcular_horas_trabalhadas()
         Clock.schedule_interval(self.calcular_horas_trabalhadas, 60)
@@ -103,7 +122,7 @@ class HomeScreen(MDScreen):
         ultimo_card = self.ids.registro_container.children[0]
         ultimo_card.update_pontos(p1, p2, p3, p4)
 
-        # Atualiza também os cards da barra superior
+       
         if "lbl_p1" in self.ids:
             self.ids.lbl_p1.text = p1
         if "lbl_p2" in self.ids:
@@ -120,10 +139,10 @@ class HomeScreen(MDScreen):
             from database.ponto_db import inserir_ponto
 
             app = App.get_running_app()
-            id_user = app.user["id"]  # ou app.user.id dependendo do formato
+            user_id = app.user["id"]  
             
             inserir_ponto(
-                id_user,
+                user_id,
                 self.data_atual,   # dia
                 dia_semana,        # dia da semana
                 p1,                # entrada
@@ -132,23 +151,25 @@ class HomeScreen(MDScreen):
                 p4                 # saída
             )
 
-        # Mostrar mensagem com barra por 10 segundos
+        
         self.mostrar_mensagem_sucesso()
+
+        app = App.get_running_app()
+        app.cache_pontos = self.registros_do_dia.copy()
+        app.cache_cards = self.ids.registro_container.children[:]
 
     def mostrar_mensagem_sucesso(self):
         box = self.ids.msg_sucesso
         barra = self.ids.barra_progresso
 
-        # anima para aparecer
+        
         Animation(height=60, opacity=1, d=0.3).start(box)
 
-        # zera barra
         barra.value = 0
-
-        # animação da barra (10 segundos)
+        
         Animation(value=100, d=10).start(barra)
 
-        # depois de 10s, esconder
+        
         Clock.schedule_once(lambda dt: self.esconder_mensagem_sucesso(), 10)
 
     def esconder_mensagem_sucesso(self):
@@ -163,7 +184,7 @@ class HomeScreen(MDScreen):
     def atualizar_data_de_hoje(self, dt=None):
         agora = datetime.now()
 
-        # Dicionários para traduzir quando vier em inglês
+        
         dias_en = {
             "Monday": "segundaa",
             "Tuesday": "terça",
@@ -189,7 +210,7 @@ class HomeScreen(MDScreen):
             "December": "dezembro"
         }
 
-        # Capturar o que o SO está retornando
+        
         dia_raw = agora.strftime("%A")
         mes_raw = agora.strftime("%B")
 
@@ -203,34 +224,32 @@ class HomeScreen(MDScreen):
         except:
             mes_raw_corrigido = mes_raw
 
-        # Se vier em inglês → traduz
+      
         dia_semana = dias_en.get(dia_raw_corrigido, dia_raw_corrigido)
         mes = meses_en.get(mes_raw_corrigido, mes_raw_corrigido)
 
-        # Montar string final
+       
         data_formatada = f"{dia_semana}, {agora.day:02d} de {mes} de {agora.year}"
 
-        # Primeira letra maiúscula
+       
         data_formatada = data_formatada[0].upper() + data_formatada[1:]
 
         self.ids.lbl_date.text = data_formatada
 
     def carregar_pontos(self, dt=None):
-        registros = listar_pontos()   # pega do banco
+        registros = listar_pontos()   
 
         if not registros:
             return
 
-
-         # LIMPA os cards antes de adicionar de novo
+   
         self.ids.registro_container.clear_widgets()
-        
 
         for reg in registros:
-            # registro = (id, id_user, dia, dia_semana, p1, p2, p3, p4)
+           
             _, _, dia, dia_semana, p1, p2, p3, p4 = reg
 
-            # cria card de histórico
+        
             card = PontoCard(
                 data=dia,
                 dia_semana=dia_semana,
@@ -338,6 +357,9 @@ class HomeScreen(MDScreen):
             # ------------------------------------------
             self.ids.lbl_total_horas.text = f"{horas:.2f} h"
             self.ids.lbl_porcentagem.text = f"{porcentagem:.1f}%"
+            app = App.get_running_app()
+            app.cache_total_horas = self.ids.lbl_total_horas.text
+            app.cache_porcentagem = self.ids.lbl_porcentagem.text
 
         except Exception as e:
             print("Erro ao calcular:", e)

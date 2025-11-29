@@ -16,7 +16,7 @@ class RegisterScreen(MDScreen):
             toast("Preencha todos os campos")
             return
 
-        # Tenta cadastrar o usuário
+        # cadastrar o usuário
         registrar_usuario(name, email, password)
 
         self.clear_inputs()

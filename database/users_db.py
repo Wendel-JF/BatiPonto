@@ -24,15 +24,16 @@ def create_users_table():
         );
     """)
 
+    email = "user@teste.com"
     # Criar usuário padrão se não existir
-    cursor.execute("SELECT * FROM users WHERE email=?", ("1",)) #admin@teste.com
+    cursor.execute("SELECT * FROM users WHERE email=?", (email,))
     exists = cursor.fetchone()
 
     if not exists:
-        password_hash = bcrypt.hashpw("1".encode(), bcrypt.gensalt())
+        password_hash = bcrypt.hashpw("123".encode(), bcrypt.gensalt())
         cursor.execute(
             "INSERT INTO users (email, name, password) VALUES (?, ?, ?)",
-            ("1", "Bruno", password_hash)
+            (email, "Bruno", password_hash)
         )
 
     conn.commit()
@@ -66,14 +67,14 @@ def registrar_usuario(name, email, password):
     cursor.execute("SELECT * FROM users WHERE email=?", (email,))
     exists = cursor.fetchone()
 
-    # Verifica se já existe usuário com o mesmo email
+   
     if exists:
         print("Usuário já existe!")
         toast("Usuário já existe!")
         conn.close()
         return
     
-    # Cria hash da senha
+    
     password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
 
     try:
@@ -88,3 +89,11 @@ def registrar_usuario(name, email, password):
         print("Erro:", e)
 
     conn.close()
+
+
+def get_user_data(user_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT name, email FROM users WHERE id = ?", (user_id,))
+    
+    return cursor.fetchone()
