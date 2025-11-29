@@ -20,6 +20,6 @@ python main.py
 
 ## Usuario 
 
-email: user@teste.com <br>
-senha: 123
+email: ```user@teste.com```
+senha: ```123```
 
