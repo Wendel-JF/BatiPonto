@@ -17,3 +17,9 @@ pip install kivymd
 ```
 python main.py
 ```
+
+## Usuario 
+
+email: user@teste.com
+senha: 123
+
